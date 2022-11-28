@@ -16,7 +16,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/yuin/gopher-lua/parse"
+	"github.com/psanford/memfs"
+	"github.com/fernandezvara/gopher-lua/parse"
 )
 
 const MultRet = -1
@@ -109,6 +110,8 @@ type Options struct {
 	// If `MinimizeStackMemory` is set, the call stack will be automatically grown or shrank up to a limit of
 	// `CallStackSize` in order to minimize memory usage. This does incur a slight performance penalty.
 	MinimizeStackMemory bool
+	// Use Virtual Filesystems commands instead of the os native ones
+	UseVirtualFilesystem bool 
 }
 
 /* }}} */
@@ -628,6 +631,10 @@ func newLState(options Options) *LState {
 		ls.stack = newAutoGrowingCallFrameStack(options.CallStackSize)
 	} else {
 		ls.stack = newFixedCallFrameStack(options.CallStackSize)
+	}
+	if options.UseVirtualFilesystem {
+		ls.UseVirtualFilesystem = true
+		ls.VFS = *memfs.New()
 	}
 	ls.reg = newRegistry(ls, options.RegistrySize, options.RegistryGrowStep, options.RegistryMaxSize, al)
 	ls.Env = ls.G.Global

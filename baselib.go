@@ -204,7 +204,12 @@ func baseLoadFile(L *LState) int {
 		chunkname = "<stdin>"
 	} else {
 		chunkname = L.CheckString(1)
-		reader, err = os.Open(chunkname)
+		if L.UseVirtualFilesystem {
+			reader, err = L.VFS.Open(chunkname)
+		} else {
+			reader, err = os.Open(chunkname)
+		}
+
 		if err != nil {
 			L.Push(LNil)
 			L.Push(LString(fmt.Sprintf("can not open file: %v", chunkname)))

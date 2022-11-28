@@ -1,4 +1,9 @@
 
+This is a fork with specific needs for virtual file systems.
+
+Please use and refer to the original one https://github.com/yuin/gopher-lua.
+
+
 ===============================================================================
 GopherLua: VM and compiler for Lua in Go.
 ===============================================================================
@@ -71,7 +76,7 @@ Import a package.
 .. code-block:: go
 
    import (
-       "github.com/yuin/gopher-lua"
+       "github.com/fernandezvara/gopher-lua"
    )
 
 Run scripts in the VM.
@@ -343,7 +348,7 @@ mymodule.go
     package mymodule
 
     import (
-        "github.com/yuin/gopher-lua"
+        "github.com/fernandezvara/gopher-lua"
     )
 
     func Loader(L *lua.LState) int {
@@ -373,7 +378,7 @@ mymain.go
 
     import (
         "./mymodule"
-        "github.com/yuin/gopher-lua"
+        "github.com/fernandezvara/gopher-lua"
     )
 
     func main() {

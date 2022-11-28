@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"os"
+
+	"github.com/psanford/memfs"
 )
 
 type LValueType int
@@ -207,6 +209,9 @@ type LState struct {
 	Panic   func(*LState)
 	Dead    bool
 	Options Options
+
+	UseVirtualFilesystem bool
+	VFS                  memfs.FS
 
 	stop         int32
 	reg          *registry
